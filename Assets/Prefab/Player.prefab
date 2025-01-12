@@ -493,6 +493,7 @@ MonoBehaviour:
   forceChange: 1
   tickTime: 0.03
   rotationSpeed: 100
+  earthCube: {fileID: 6803368103561741525, guid: f94cc14fe02d602469f91a41d4d28043, type: 3}
   earthMask:
     serializedVersion: 2
     m_Bits: 8

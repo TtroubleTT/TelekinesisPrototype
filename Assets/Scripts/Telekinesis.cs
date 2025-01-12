@@ -38,6 +38,7 @@ public class Telekinesis : MonoBehaviour
     private bool rotate = false;
 
     [Header("Raise Earth Info")] 
+    [SerializeField] private GameObject earthCube;
     [SerializeField] private LayerMask earthMask;
 
     public void OnPush(InputAction.CallbackContext context)
@@ -162,18 +163,15 @@ public class Telekinesis : MonoBehaviour
         if (!context.started)
             return;
         
-        Debug.Log("past context");
         Vector3 camPos = camTrans.position;
-        Quaternion camRot = camTrans.rotation;
         Vector3 forward = camTrans.forward;
         
         bool hit = Physics.Raycast(camPos, forward, out RaycastHit hitInfo, maxDistanceFromPlayer, earthMask);
         if (!hit)
             return;
-
-        Debug.Log("creating cube");
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = hitInfo.point;
+        
+        GameObject cube = Instantiate(earthCube);
+        cube.transform.position = hitInfo.point + Vector3.up;
         cube.transform.localScale = new Vector3(1, 1, 1);
     }
 

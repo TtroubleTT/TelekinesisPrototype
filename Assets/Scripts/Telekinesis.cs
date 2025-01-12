@@ -34,8 +34,7 @@ public class Telekinesis : MonoBehaviour
     private float lastTick;
 
     [Header("Rotate Info")] 
-    [SerializeField] private float rotationSpeed = 10f;
-    private bool rotate = false;
+    [SerializeField] private float torqueForce = 10f;
 
     [Header("Raise Earth Info")] 
     [SerializeField] private GameObject earthCube;
@@ -128,6 +127,9 @@ public class Telekinesis : MonoBehaviour
 
     public void OnChangeDistance(InputAction.CallbackContext context)
     {
+        if (secondaryMode)
+            return;
+        
         if (!context.started)
             return;
         
@@ -156,19 +158,23 @@ public class Telekinesis : MonoBehaviour
 
     public void OnRotateObject(InputAction.CallbackContext context)
     {
-        if (context.canceled)
-        {
-            rotate = false;
+        if (!secondaryMode)
             return;
-        }
         
         if (!grabbingObject)
             return;
 
-        if (context.started)
+        if (!context.started)
+            return;
+        
+        Vector2 scrollInput = context.ReadValue<Vector2>();
+        Vector3 direction = Vector3.up;
+        if (scrollInput.y < 0)
         {
-            rotate = true;
+            direction = Vector3.down;
         }
+        
+        grabbedRb.AddTorque(direction * torqueForce, ForceMode.Impulse);
     }
 
     public void OnRaiseEarth(InputAction.CallbackContext context)
@@ -223,11 +229,6 @@ public class Telekinesis : MonoBehaviour
         UpdateRaiseEarth();
     }
 
-    private void FixedUpdate()
-    {
-        UpdateRotateObject();
-    }
-
     private void UpdateGrabPosition()
     {
         if (!grabbingObject)
@@ -263,17 +264,6 @@ public class Telekinesis : MonoBehaviour
         }
 
         currentMultiplier = newAmount;
-    }
-
-    private void UpdateRotateObject()
-    {
-        if (!rotate)
-            return;
-
-        if (!grabbingObject)
-            return;
-
-        grabbedRb.angularVelocity = Vector3.up * rotationSpeed;
     }
 
     private void UpdateRaiseEarth()

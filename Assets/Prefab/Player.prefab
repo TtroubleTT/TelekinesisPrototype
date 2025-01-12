@@ -417,10 +417,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 8d24cceb-9598-48f8-ab6d-a161177af095
-    m_ActionName: Player/TelekinesisReposition[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls:
       - m_Target: {fileID: 9058407273914045292}
         m_TargetAssemblyTypeName: Telekinesis, Assembly-CSharp
         m_MethodName: OnRotateObject
@@ -433,8 +429,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 9e965b36-616a-401e-bc1a-3c8bcfed1d4f
-    m_ActionName: Player/RotateObject[/Keyboard/e]
+    m_ActionId: 8d24cceb-9598-48f8-ab6d-a161177af095
+    m_ActionName: Player/TelekinesisReposition[/Mouse/scroll]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9058407273914045292}

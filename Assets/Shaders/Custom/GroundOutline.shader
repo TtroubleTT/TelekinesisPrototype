@@ -3,8 +3,8 @@ Shader "Custom/GroundOutline"
     Properties
     {
         _OutlineColor ("Outline Color", Color) = (1, 1, 1, 1)
-        _Size ("Size", Vector) = (1, 1, 0, 0) // For boxes/rectangles
-        _Radius ("Radius", Float) = 0.5 // For circles
+        _Size ("Size", Vector) = (1, 1, 0, 0)
+        _Radius ("Radius", Float) = 0.5
         _Shape ("Shape", Int) = 0 // 0: Circle, 1: Rectangle
         _Thickness ("Thickness", Float) = 0.05
     }
@@ -54,7 +54,7 @@ Shader "Custom/GroundOutline"
                 {
                     float dist = distance(i.uv, float2(0, 0));
                     float outerRadius = _Radius;
-                    float innerRadius = _Radius - _Thickness;
+                    float innerRadius = outerRadius - _Thickness;
 
                     if (dist > innerRadius && dist < outerRadius)
                     {
@@ -67,11 +67,11 @@ Shader "Custom/GroundOutline"
                     float2 outer = halfSize;
                     float2 inner = halfSize - _Thickness;
 
-                    if (i.uv.x > -outer.x && i.uv.x < outer.x && (i.uv.y > outer.y || i.uv.y < -outer.y) ||
-                        i.uv.y > -outer.y && i.uv.y < outer.y && (i.uv.x > outer.x || i.uv.x < -outer.x))
+                   if (abs(i.uv.x) > inner.x && abs(i.uv.x) < outer.x || abs(i.uv.y) > inner.y && abs(i.uv.y) < outer.y)
                     {
                         return _OutlineColor;
                     }
+
                 }
 
                 return fixed4(0, 0, 0, 0);

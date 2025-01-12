@@ -325,6 +325,7 @@ public class Telekinesis : MonoBehaviour
     private void UpdatePreview()
     {
         bool previewMode = secondaryMode;
+        previewMode = true;
 
         if (previewMode)
         {
@@ -339,10 +340,9 @@ public class Telekinesis : MonoBehaviour
                 }
 
                 previewInstance.transform.position = hitInfo.point + Vector3.up * 0.003f;
-                previewInstance.transform.localScale = earthObjectToRaise.transform.localScale;
+                previewInstance.transform.localScale = new Vector3(raiseObjectSize.x, raiseObjectSize.z, 1f);
 
-                Renderer renderer = previewInstance.GetComponent<Renderer>();
-                Material mat = renderer.material;
+                Material mat = previewInstance.GetComponent<Renderer>().material;
 
                 if (earthObjectToRaise != null)
                 {

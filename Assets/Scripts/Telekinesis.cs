@@ -443,7 +443,6 @@ public class Telekinesis : MonoBehaviour
         GameObject cube = Instantiate(earthObjectToRaise);
         cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + (scale.y / 2), hitInfo.point.z);
         cube.transform.localScale = scale;
-        Debug.Log($"scale {scale}");
         return cube;
     }
 }

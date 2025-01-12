@@ -267,7 +267,7 @@ public class Telekinesis : MonoBehaviour
         }
         
         Vector3 scale = raiseObjectSize;
-        raiseObjectSize = new Vector3(scale.x + changeAmount, scale.y, scale.z + changeAmount);
+        raiseObjectSize = new Vector3(Mathf.Max(scale.x + changeAmount, 0.1f), scale.y, Mathf.Max(scale.z + changeAmount, 0.1f));
     }
 
     private void Start()
@@ -443,7 +443,6 @@ public class Telekinesis : MonoBehaviour
         GameObject cube = Instantiate(earthObjectToRaise);
         cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + (scale.y / 2), hitInfo.point.z);
         cube.transform.localScale = scale;
-        Debug.Log($"scale {scale}");
         return cube;
     }
 }

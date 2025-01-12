@@ -116,6 +116,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeRaiseObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""d30061e3-8770-4995-96cd-d55d191be114"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -358,6 +367,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""SecondaryMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d81d2fd5-7049-4669-8705-6e28897eb29c"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ChangeRaiseObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -922,6 +942,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_SetupAction = m_Player.FindAction("SetupAction", throwIfNotFound: true);
         m_Player_ScrollAction = m_Player.FindAction("ScrollAction", throwIfNotFound: true);
         m_Player_SecondaryMode = m_Player.FindAction("SecondaryMode", throwIfNotFound: true);
+        m_Player_ChangeRaiseObject = m_Player.FindAction("ChangeRaiseObject", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1005,6 +1026,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SetupAction;
     private readonly InputAction m_Player_ScrollAction;
     private readonly InputAction m_Player_SecondaryMode;
+    private readonly InputAction m_Player_ChangeRaiseObject;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1019,6 +1041,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SetupAction => m_Wrapper.m_Player_SetupAction;
         public InputAction @ScrollAction => m_Wrapper.m_Player_ScrollAction;
         public InputAction @SecondaryMode => m_Wrapper.m_Player_SecondaryMode;
+        public InputAction @ChangeRaiseObject => m_Wrapper.m_Player_ChangeRaiseObject;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1058,6 +1081,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SecondaryMode.started += instance.OnSecondaryMode;
             @SecondaryMode.performed += instance.OnSecondaryMode;
             @SecondaryMode.canceled += instance.OnSecondaryMode;
+            @ChangeRaiseObject.started += instance.OnChangeRaiseObject;
+            @ChangeRaiseObject.performed += instance.OnChangeRaiseObject;
+            @ChangeRaiseObject.canceled += instance.OnChangeRaiseObject;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1092,6 +1118,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SecondaryMode.started -= instance.OnSecondaryMode;
             @SecondaryMode.performed -= instance.OnSecondaryMode;
             @SecondaryMode.canceled -= instance.OnSecondaryMode;
+            @ChangeRaiseObject.started -= instance.OnChangeRaiseObject;
+            @ChangeRaiseObject.performed -= instance.OnChangeRaiseObject;
+            @ChangeRaiseObject.canceled -= instance.OnChangeRaiseObject;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1257,6 +1286,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSetupAction(InputAction.CallbackContext context);
         void OnScrollAction(InputAction.CallbackContext context);
         void OnSecondaryMode(InputAction.CallbackContext context);
+        void OnChangeRaiseObject(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

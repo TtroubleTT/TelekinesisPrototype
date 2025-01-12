@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,7 +23,7 @@ public class Telekinesis : MonoBehaviour
     private bool grabbingObject = false;
     private Transform grabbedObject;
     private Rigidbody grabbedRb;
-    
+
     [Header("Push Info")]
     [SerializeField] private float defaultForce = 100f;
     [SerializeField] private float maxForceMultiplier = 30;
@@ -36,15 +36,29 @@ public class Telekinesis : MonoBehaviour
     [Header("Rotate Info")] 
     [SerializeField] private float torqueForce = 10f;
 
-    [Header("Raise Earth Info")] 
-    [SerializeField] private GameObject earthCube;
-    [SerializeField] private LayerMask earthMask;
-    [SerializeField] private float raiseTickTime = 0.05f;
-    [SerializeField] private float raiseIncreaseAmount = 0.2f;
+    [Header("Raise Earth Info")]
+    [SerializeField]
+    private List<GameObject> earthObjects;
+
+    [SerializeField]
+    private LayerMask earthMask;
+
+    [SerializeField]
+    private float raiseTickTime = 0.05f;
+
+    [SerializeField]
+    private float raiseIncreaseAmount = 0.2f;
+
+    private GameObject earthObjectToRaise;
     private float lastRaiseTick;
     private bool raisingEarth = false;
     private GameObject earthObj;
     private bool secondaryMode = false;
+
+    [SerializeField]
+    private Material previewMaterial;
+
+    private GameObject previewInstance;
 
     public void OnPush(InputAction.CallbackContext context)
     {
@@ -55,12 +69,12 @@ public class Telekinesis : MonoBehaviour
             lastTick = Time.time;
             return;
         }
-        
+
         if (!context.canceled)
             return;
-        
+
         increaseMultiplier = false;
-        
+
         Vector3 camPos = camTrans.position;
         Quaternion camRot = camTrans.rotation;
         Vector3 forward = camTrans.forward;
@@ -88,7 +102,7 @@ public class Telekinesis : MonoBehaviour
 
             if (grabbedObject == null)
                 return;
-            
+
             Rigidbody rigid = grabbedObject.GetComponent<Rigidbody>();
             if (rigid == null)
                 return;
@@ -96,13 +110,13 @@ public class Telekinesis : MonoBehaviour
             rigid.useGravity = true;
             return;
         }
-        
+
         if (secondaryMode)
             return;
-        
+
         if (!context.started)
             return;
-        
+
         Vector3 camPos = camTrans.position;
         Quaternion camRot = camTrans.rotation;
         Vector3 forward = camTrans.forward;
@@ -132,7 +146,7 @@ public class Telekinesis : MonoBehaviour
         
         if (!context.started)
             return;
-        
+
         Vector2 scrollInput = context.ReadValue<Vector2>();
         float amountChange = scrollChange;
         if (scrollInput.y < 0)
@@ -184,20 +198,20 @@ public class Telekinesis : MonoBehaviour
             raisingEarth = false;
             return;
         }
-        
+
         if (!secondaryMode)
             return;
-        
+
         if (!context.started)
             return;
-        
+
         Vector3 camPos = camTrans.position;
         Vector3 forward = camTrans.forward;
-        
+
         bool hit = Physics.Raycast(camPos, forward, out RaycastHit hitInfo, maxDistanceFromPlayer, earthMask);
         if (!hit)
             return;
-        
+
         earthObj = CreateEarth(hitInfo, new Vector3(1, .1f, 1));
         raisingEarth = true;
         lastRaiseTick = Time.time;
@@ -217,9 +231,15 @@ public class Telekinesis : MonoBehaviour
         }
     }
 
+    public void OnChangeRaiseObject(InputAction.CallbackContext context)
+    {
+        earthObjectToRaise = earthObjects[(earthObjects.IndexOf(earthObjectToRaise) + 1) % earthObjects.Count];
+    }
+
     private void Start()
     {
         distanceFromPlayer = minDistanceFromPlayer;
+        earthObjectToRaise = earthObjects[0];
     }
 
     private void Update()
@@ -227,6 +247,7 @@ public class Telekinesis : MonoBehaviour
         UpdateGrabPosition();
         UpdatePushIntensity();
         UpdateRaiseEarth();
+        UpdatePreview();
     }
 
     private void UpdateGrabPosition()
@@ -239,7 +260,7 @@ public class Telekinesis : MonoBehaviour
         {
             speed += movement.GetCurrentSpeed();
         }
-        
+
         float step = speed * Time.deltaTime;
         Vector3 targetPos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceFromPlayer));
         targetPos += Vector3.up * 0.9f;
@@ -266,6 +287,97 @@ public class Telekinesis : MonoBehaviour
         currentMultiplier = newAmount;
     }
 
+    private void UpdatePreview()
+    {
+        bool previewMode = secondaryMode;
+
+        if (previewMode)
+        {
+            Vector3 camPos = camTrans.position;
+            Vector3 forward = camTrans.forward;
+
+            if (Physics.Raycast(camPos, forward, out RaycastHit hitInfo, maxDistanceFromPlayer, earthMask))
+            {
+                if (previewInstance == null)
+                {
+                    CreatePreview();
+                }
+
+                previewInstance.transform.position = hitInfo.point + Vector3.up * 0.003f;
+                previewInstance.transform.localScale = Vector3.one;
+
+                Renderer renderer = previewInstance.GetComponent<Renderer>();
+                Material mat = renderer.material;
+
+                if (earthObjectToRaise != null)
+                {
+                    SetPreviewShape(mat, earthObjectToRaise);
+                }
+                else
+                {
+                    mat.SetInt("_Shape", 1);
+                    mat.SetVector("_Size", Vector2.one);
+                }
+
+                previewInstance.SetActive(true);
+            }
+            else
+            {
+                DestroyPreview();
+            }
+        }
+        else
+        {
+            DestroyPreview();
+        }
+    }
+
+    private void SetPreviewShape(Material mat, GameObject obj)
+    {
+        if (obj.GetComponent<SphereCollider>() != null || obj.GetComponent<CapsuleCollider>() != null)
+        {
+            float radius = obj.GetComponent<SphereCollider>() != null
+                ? obj.GetComponent<SphereCollider>().radius
+                : obj.GetComponent<CapsuleCollider>().radius;
+            mat.SetInt("_Shape", 0); // Circle
+            mat.SetFloat("_Radius", radius);
+        }
+        else if (obj.GetComponent<BoxCollider>() != null)
+        {
+            mat.SetInt("_Shape", 1); // Rectangle
+            mat.SetVector("_Size", new Vector2(obj.transform.localScale.x, obj.transform.localScale.z));
+        }
+        else if (obj.GetComponent<MeshFilter>() != null)
+        {
+            mat.SetInt("_Shape", 1);
+            mat.SetVector(
+                "_Size",
+                new Vector2(obj.GetComponent<MeshFilter>().mesh.bounds.size.x, obj.GetComponent<MeshFilter>().mesh.bounds.size.z));
+        }
+        else
+        {
+            mat.SetInt("_Shape", 1);
+            mat.SetVector("_Size", Vector2.one);
+        }
+    }
+
+    private void CreatePreview()
+    {
+        previewInstance = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        Destroy(previewInstance.GetComponent<MeshCollider>());
+        previewInstance.GetComponent<Renderer>().material = previewMaterial;
+        previewInstance.transform.rotation = Quaternion.Euler(90, 0, 0);
+    }
+
+    private void DestroyPreview()
+    {
+        if (previewInstance != null)
+        {
+            Destroy(previewInstance);
+            previewInstance = null;
+        }
+    }
+
     private void UpdateRaiseEarth()
     {
         if (!raisingEarth)
@@ -278,11 +390,11 @@ public class Telekinesis : MonoBehaviour
         Vector3 scale = earthObj.transform.localScale;
         earthObj.transform.localScale = new Vector3(scale.x, scale.y + raiseIncreaseAmount, scale.z);
     }
-    
+
     private void PushGameObject(GameObject obj, Vector3 direction)
     {
         grabbingObject = false;
-        
+
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         if (rb == null)
             return;
@@ -293,7 +405,7 @@ public class Telekinesis : MonoBehaviour
 
     private GameObject CreateEarth(RaycastHit hitInfo, Vector3 scale)
     {
-        GameObject cube = Instantiate(earthCube);
+        GameObject cube = Instantiate(earthObjectToRaise);
         cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + (scale.y / 2), hitInfo.point.z);
         cube.transform.localScale = scale;
         return cube;

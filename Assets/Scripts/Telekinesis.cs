@@ -49,6 +49,9 @@ public class Telekinesis : MonoBehaviour
     [SerializeField]
     private float raiseIncreaseAmount = 0.2f;
 
+    [SerializeField] 
+    private float sizeChangeAmount = 0.3f;
+
     private GameObject earthObjectToRaise;
     private float lastRaiseTick;
     private bool raisingEarth = false;
@@ -59,6 +62,7 @@ public class Telekinesis : MonoBehaviour
     private Material previewMaterial;
 
     private GameObject previewInstance;
+    private Vector3 raiseObjectSize;
 
     public void OnPush(InputAction.CallbackContext context)
     {
@@ -215,7 +219,8 @@ public class Telekinesis : MonoBehaviour
         if (!hit)
             return;
 
-        earthObj = CreateEarth(hitInfo, new Vector3(1, .1f, 1));
+        Vector3 scale = raiseObjectSize;
+        earthObj = CreateEarth(hitInfo, new Vector3(scale.x, .1f, scale.z));
         raisingEarth = true;
         lastRaiseTick = Time.time;
     }
@@ -252,12 +257,24 @@ public class Telekinesis : MonoBehaviour
 
         if (grabbingObject)
             return;
+        
+        Vector2 scrollInput = context.ReadValue<Vector2>();
+        float changeAmount = sizeChangeAmount;
+        
+        if (scrollInput.y < 0)
+        {
+            changeAmount *= -1;
+        }
+        
+        Vector3 scale = raiseObjectSize;
+        raiseObjectSize = new Vector3(scale.x + changeAmount, scale.y, scale.z + changeAmount);
     }
 
     private void Start()
     {
         distanceFromPlayer = minDistanceFromPlayer;
         earthObjectToRaise = earthObjects[0];
+        raiseObjectSize = earthObjectToRaise.transform.localScale;
     }
 
     private void Update()
@@ -426,6 +443,7 @@ public class Telekinesis : MonoBehaviour
         GameObject cube = Instantiate(earthObjectToRaise);
         cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + (scale.y / 2), hitInfo.point.z);
         cube.transform.localScale = scale;
+        Debug.Log($"scale {scale}");
         return cube;
     }
 }

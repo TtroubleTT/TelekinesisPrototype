@@ -325,7 +325,6 @@ public class Telekinesis : MonoBehaviour
     private void UpdatePreview()
     {
         bool previewMode = secondaryMode;
-        previewMode = true;
 
         if (previewMode)
         {

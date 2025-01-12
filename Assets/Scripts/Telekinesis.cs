@@ -245,6 +245,15 @@ public class Telekinesis : MonoBehaviour
         earthObjectToRaise = earthObjects[(earthObjects.IndexOf(earthObjectToRaise) + 1) % earthObjects.Count];
     }
 
+    public void OnChangeRaiseObjectSize(InputAction.CallbackContext context)
+    {
+        if (!secondaryMode)
+            return;
+
+        if (grabbingObject)
+            return;
+    }
+
     private void Start()
     {
         distanceFromPlayer = minDistanceFromPlayer;

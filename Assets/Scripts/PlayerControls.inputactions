@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TelekinesisPush",
+                    "name": "MainAction",
                     "type": "Button",
                     "id": "37f81ab1-30c3-411a-ace3-4266f243a325",
                     "expectedControlType": "Button",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TelekinesisGrab",
+                    "name": "SetupAction",
                     "type": "Button",
                     "id": "f0d7cb3a-2da1-45d7-b239-45676dabda0f",
                     "expectedControlType": "Button",
@@ -96,9 +96,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RaiseEarth",
+                    "name": "RaiseMode",
                     "type": "Button",
-                    "id": "829d773d-42ef-44ad-99ee-cbbda3e137d6",
+                    "id": "56877eda-cdea-447a-939e-4e7d1d4f782e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -289,7 +289,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "TelekinesisPush",
+                    "action": "MainAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -300,7 +300,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "TelekinesisPush",
+                    "action": "MainAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -311,7 +311,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "TelekinesisGrab",
+                    "action": "SetupAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -322,7 +322,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "TelekinesisGrab",
+                    "action": "SetupAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -350,12 +350,12 @@
                 },
                 {
                     "name": "",
-                    "id": "43e43363-d5d4-47c3-9040-e541b0eabbec",
-                    "path": "<Keyboard>/q",
+                    "id": "d6f43fef-a17d-4585-8024-777eb07d7461",
+                    "path": "<Keyboard>/leftAlt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "RaiseEarth",
+                    "action": "RaiseMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

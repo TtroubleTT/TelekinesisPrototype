@@ -45,6 +45,7 @@ public class Telekinesis : MonoBehaviour
     private float lastRaiseTick;
     private bool raisingEarth = false;
     private GameObject earthObj;
+    private bool raiseEarthMode = false;
 
     public void OnPush(InputAction.CallbackContext context)
     {
@@ -92,6 +93,9 @@ public class Telekinesis : MonoBehaviour
             rigid.useGravity = true;
             return;
         }
+        
+        if (raiseEarthMode)
+            return;
         
         if (!context.started)
             return;
@@ -171,6 +175,9 @@ public class Telekinesis : MonoBehaviour
             return;
         }
         
+        if (!raiseEarthMode)
+            return;
+        
         if (!context.started)
             return;
         
@@ -184,6 +191,20 @@ public class Telekinesis : MonoBehaviour
         earthObj = CreateEarth(hitInfo, new Vector3(1, .1f, 1));
         raisingEarth = true;
         lastRaiseTick = Time.time;
+    }
+
+    public void OnRaiseEarthMode(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+        {
+            raiseEarthMode = false;
+            return;
+        }
+
+        if (context.started)
+        {
+            raiseEarthMode = true;
+        }
     }
 
     private void Start()

@@ -82,7 +82,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TelekinesisPush"",
+                    ""name"": ""MainAction"",
                     ""type"": ""Button"",
                     ""id"": ""37f81ab1-30c3-411a-ace3-4266f243a325"",
                     ""expectedControlType"": ""Button"",
@@ -91,7 +91,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TelekinesisGrab"",
+                    ""name"": ""SetupAction"",
                     ""type"": ""Button"",
                     ""id"": ""f0d7cb3a-2da1-45d7-b239-45676dabda0f"",
                     ""expectedControlType"": ""Button"",
@@ -118,9 +118,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RaiseEarth"",
+                    ""name"": ""RaiseMode"",
                     ""type"": ""Button"",
-                    ""id"": ""829d773d-42ef-44ad-99ee-cbbda3e137d6"",
+                    ""id"": ""56877eda-cdea-447a-939e-4e7d1d4f782e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -311,7 +311,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""TelekinesisPush"",
+                    ""action"": ""MainAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -322,7 +322,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""TelekinesisPush"",
+                    ""action"": ""MainAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -333,7 +333,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""TelekinesisGrab"",
+                    ""action"": ""SetupAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -344,7 +344,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""TelekinesisGrab"",
+                    ""action"": ""SetupAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -372,12 +372,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""43e43363-d5d4-47c3-9040-e541b0eabbec"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""d6f43fef-a17d-4585-8024-777eb07d7461"",
+                    ""path"": ""<Keyboard>/leftAlt"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""RaiseEarth"",
+                    ""action"": ""RaiseMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -938,11 +938,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
-        m_Player_TelekinesisPush = m_Player.FindAction("TelekinesisPush", throwIfNotFound: true);
-        m_Player_TelekinesisGrab = m_Player.FindAction("TelekinesisGrab", throwIfNotFound: true);
+        m_Player_MainAction = m_Player.FindAction("MainAction", throwIfNotFound: true);
+        m_Player_SetupAction = m_Player.FindAction("SetupAction", throwIfNotFound: true);
         m_Player_TelekinesisReposition = m_Player.FindAction("TelekinesisReposition", throwIfNotFound: true);
         m_Player_RotateObject = m_Player.FindAction("RotateObject", throwIfNotFound: true);
-        m_Player_RaiseEarth = m_Player.FindAction("RaiseEarth", throwIfNotFound: true);
+        m_Player_RaiseMode = m_Player.FindAction("RaiseMode", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1022,11 +1022,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_PauseMenu;
-    private readonly InputAction m_Player_TelekinesisPush;
-    private readonly InputAction m_Player_TelekinesisGrab;
+    private readonly InputAction m_Player_MainAction;
+    private readonly InputAction m_Player_SetupAction;
     private readonly InputAction m_Player_TelekinesisReposition;
     private readonly InputAction m_Player_RotateObject;
-    private readonly InputAction m_Player_RaiseEarth;
+    private readonly InputAction m_Player_RaiseMode;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1037,11 +1037,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
-        public InputAction @TelekinesisPush => m_Wrapper.m_Player_TelekinesisPush;
-        public InputAction @TelekinesisGrab => m_Wrapper.m_Player_TelekinesisGrab;
+        public InputAction @MainAction => m_Wrapper.m_Player_MainAction;
+        public InputAction @SetupAction => m_Wrapper.m_Player_SetupAction;
         public InputAction @TelekinesisReposition => m_Wrapper.m_Player_TelekinesisReposition;
         public InputAction @RotateObject => m_Wrapper.m_Player_RotateObject;
-        public InputAction @RaiseEarth => m_Wrapper.m_Player_RaiseEarth;
+        public InputAction @RaiseMode => m_Wrapper.m_Player_RaiseMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1069,21 +1069,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseMenu.started += instance.OnPauseMenu;
             @PauseMenu.performed += instance.OnPauseMenu;
             @PauseMenu.canceled += instance.OnPauseMenu;
-            @TelekinesisPush.started += instance.OnTelekinesisPush;
-            @TelekinesisPush.performed += instance.OnTelekinesisPush;
-            @TelekinesisPush.canceled += instance.OnTelekinesisPush;
-            @TelekinesisGrab.started += instance.OnTelekinesisGrab;
-            @TelekinesisGrab.performed += instance.OnTelekinesisGrab;
-            @TelekinesisGrab.canceled += instance.OnTelekinesisGrab;
+            @MainAction.started += instance.OnMainAction;
+            @MainAction.performed += instance.OnMainAction;
+            @MainAction.canceled += instance.OnMainAction;
+            @SetupAction.started += instance.OnSetupAction;
+            @SetupAction.performed += instance.OnSetupAction;
+            @SetupAction.canceled += instance.OnSetupAction;
             @TelekinesisReposition.started += instance.OnTelekinesisReposition;
             @TelekinesisReposition.performed += instance.OnTelekinesisReposition;
             @TelekinesisReposition.canceled += instance.OnTelekinesisReposition;
             @RotateObject.started += instance.OnRotateObject;
             @RotateObject.performed += instance.OnRotateObject;
             @RotateObject.canceled += instance.OnRotateObject;
-            @RaiseEarth.started += instance.OnRaiseEarth;
-            @RaiseEarth.performed += instance.OnRaiseEarth;
-            @RaiseEarth.canceled += instance.OnRaiseEarth;
+            @RaiseMode.started += instance.OnRaiseMode;
+            @RaiseMode.performed += instance.OnRaiseMode;
+            @RaiseMode.canceled += instance.OnRaiseMode;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1106,21 +1106,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseMenu.started -= instance.OnPauseMenu;
             @PauseMenu.performed -= instance.OnPauseMenu;
             @PauseMenu.canceled -= instance.OnPauseMenu;
-            @TelekinesisPush.started -= instance.OnTelekinesisPush;
-            @TelekinesisPush.performed -= instance.OnTelekinesisPush;
-            @TelekinesisPush.canceled -= instance.OnTelekinesisPush;
-            @TelekinesisGrab.started -= instance.OnTelekinesisGrab;
-            @TelekinesisGrab.performed -= instance.OnTelekinesisGrab;
-            @TelekinesisGrab.canceled -= instance.OnTelekinesisGrab;
+            @MainAction.started -= instance.OnMainAction;
+            @MainAction.performed -= instance.OnMainAction;
+            @MainAction.canceled -= instance.OnMainAction;
+            @SetupAction.started -= instance.OnSetupAction;
+            @SetupAction.performed -= instance.OnSetupAction;
+            @SetupAction.canceled -= instance.OnSetupAction;
             @TelekinesisReposition.started -= instance.OnTelekinesisReposition;
             @TelekinesisReposition.performed -= instance.OnTelekinesisReposition;
             @TelekinesisReposition.canceled -= instance.OnTelekinesisReposition;
             @RotateObject.started -= instance.OnRotateObject;
             @RotateObject.performed -= instance.OnRotateObject;
             @RotateObject.canceled -= instance.OnRotateObject;
-            @RaiseEarth.started -= instance.OnRaiseEarth;
-            @RaiseEarth.performed -= instance.OnRaiseEarth;
-            @RaiseEarth.canceled -= instance.OnRaiseEarth;
+            @RaiseMode.started -= instance.OnRaiseMode;
+            @RaiseMode.performed -= instance.OnRaiseMode;
+            @RaiseMode.canceled -= instance.OnRaiseMode;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1282,11 +1282,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
-        void OnTelekinesisPush(InputAction.CallbackContext context);
-        void OnTelekinesisGrab(InputAction.CallbackContext context);
+        void OnMainAction(InputAction.CallbackContext context);
+        void OnSetupAction(InputAction.CallbackContext context);
         void OnTelekinesisReposition(InputAction.CallbackContext context);
         void OnRotateObject(InputAction.CallbackContext context);
-        void OnRaiseEarth(InputAction.CallbackContext context);
+        void OnRaiseMode(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

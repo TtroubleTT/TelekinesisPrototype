@@ -389,6 +389,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 9058407273914045292}
+        m_TargetAssemblyTypeName: Telekinesis, Assembly-CSharp
+        m_MethodName: OnRaiseEarth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f0d7cb3a-2da1-45d7-b239-45676dabda0f
     m_ActionName: Player/TelekinesisGrab[/Mouse/rightButton]
   - m_PersistentCalls:
@@ -427,7 +439,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9058407273914045292}
         m_TargetAssemblyTypeName: Telekinesis, Assembly-CSharp
-        m_MethodName: OnRaiseEarth
+        m_MethodName: OnRaiseEarthMode
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -437,8 +449,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 829d773d-42ef-44ad-99ee-cbbda3e137d6
-    m_ActionName: Player/RaiseEarth[/Keyboard/q]
+    m_ActionId: 56877eda-cdea-447a-939e-4e7d1d4f782e
+    m_ActionName: Player/RaiseMode[/Keyboard/leftAlt]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player

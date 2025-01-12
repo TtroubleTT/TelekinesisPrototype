@@ -40,6 +40,11 @@ public class Telekinesis : MonoBehaviour
     [Header("Raise Earth Info")] 
     [SerializeField] private GameObject earthCube;
     [SerializeField] private LayerMask earthMask;
+    [SerializeField] private float raiseTickTime = 0.05f;
+    [SerializeField] private float raiseIncreaseAmount = 0.2f;
+    private float lastRaiseTick;
+    private bool raisingEarth = false;
+    private GameObject earthObj;
 
     public void OnPush(InputAction.CallbackContext context)
     {
@@ -160,6 +165,12 @@ public class Telekinesis : MonoBehaviour
 
     public void OnRaiseEarth(InputAction.CallbackContext context)
     {
+        if (context.canceled)
+        {
+            raisingEarth = false;
+            return;
+        }
+        
         if (!context.started)
             return;
         
@@ -170,9 +181,9 @@ public class Telekinesis : MonoBehaviour
         if (!hit)
             return;
         
-        GameObject cube = Instantiate(earthCube);
-        cube.transform.position = hitInfo.point + Vector3.up;
-        cube.transform.localScale = new Vector3(1, 1, 1);
+        earthObj = CreateEarth(hitInfo, new Vector3(1, .1f, 1));
+        raisingEarth = true;
+        lastRaiseTick = Time.time;
     }
 
     private void Start()
@@ -184,6 +195,7 @@ public class Telekinesis : MonoBehaviour
     {
         UpdateGrabPosition();
         UpdatePushIntensity();
+        UpdateRaiseEarth();
     }
 
     private void FixedUpdate()
@@ -238,6 +250,19 @@ public class Telekinesis : MonoBehaviour
 
         grabbedRb.angularVelocity = Vector3.up * rotationSpeed;
     }
+
+    private void UpdateRaiseEarth()
+    {
+        if (!raisingEarth)
+            return;
+
+        if (Time.time - lastRaiseTick < raiseTickTime)
+            return;
+
+        lastRaiseTick = Time.time;
+        Vector3 scale = earthObj.transform.localScale;
+        earthObj.transform.localScale = new Vector3(scale.x, scale.y + raiseIncreaseAmount, scale.z);
+    }
     
     private void PushGameObject(GameObject obj, Vector3 direction)
     {
@@ -249,5 +274,13 @@ public class Telekinesis : MonoBehaviour
 
         rb.useGravity = true;
         rb.AddForce(direction * (defaultForce * currentMultiplier), ForceMode.Force);
+    }
+
+    private GameObject CreateEarth(RaycastHit hitInfo, Vector3 scale)
+    {
+        GameObject cube = Instantiate(earthCube);
+        cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + (scale.y / 2), hitInfo.point.z);
+        cube.transform.localScale = scale;
+        return cube;
     }
 }

@@ -497,6 +497,8 @@ MonoBehaviour:
   earthMask:
     serializedVersion: 2
     m_Bits: 8
+  raiseTickTime: 0.05
+  raiseIncreaseAmount: 0.2
 --- !u!1 &7690618335555232357
 GameObject:
   m_ObjectHideFlags: 0

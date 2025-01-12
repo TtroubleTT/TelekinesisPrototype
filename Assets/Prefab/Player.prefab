@@ -210,7 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: f609e827d2607e44c95fc0f4fa6037ab, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: f609e827d2607e44c95fc0f4fa6037ab,
+    type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -447,6 +448,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 56877eda-cdea-447a-939e-4e7d1d4f782e
     m_ActionName: Player/RaiseMode[/Keyboard/leftAlt]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9058407273914045292}
+        m_TargetAssemblyTypeName: Telekinesis, Assembly-CSharp
+        m_MethodName: OnChangeRaiseObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d30061e3-8770-4995-96cd-d55d191be114
+    m_ActionName: Player/ChangeRaiseObject
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
@@ -501,12 +518,15 @@ MonoBehaviour:
   forceChange: 1
   tickTime: 0.03
   rotationSpeed: 100
-  earthCube: {fileID: 6803368103561741525, guid: f94cc14fe02d602469f91a41d4d28043, type: 3}
+  earthObjects:
+  - {fileID: 6803368103561741525, guid: f94cc14fe02d602469f91a41d4d28043, type: 3}
+  - {fileID: 8922846951981866710, guid: 8eb7658c23eb6de4eaee706591dd78d1, type: 3}
   earthMask:
     serializedVersion: 2
     m_Bits: 8
   raiseTickTime: 0.05
   raiseIncreaseAmount: 0.2
+  previewMaterial: {fileID: 2100000, guid: e33abd50164178c4994fc9fa9369a7ff, type: 2}
 --- !u!1 &7690618335555232357
 GameObject:
   m_ObjectHideFlags: 0

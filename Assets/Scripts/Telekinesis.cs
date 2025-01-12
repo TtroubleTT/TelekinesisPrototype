@@ -313,7 +313,7 @@ public class Telekinesis : MonoBehaviour
                 }
 
                 previewInstance.transform.position = hitInfo.point + Vector3.up * 0.003f;
-                previewInstance.transform.localScale = Vector3.one;
+                previewInstance.transform.localScale = earthObjectToRaise.transform.localScale;
 
                 Renderer renderer = previewInstance.GetComponent<Renderer>();
                 Material mat = renderer.material;

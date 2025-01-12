@@ -87,7 +87,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RaiseMode",
+                    "name": "SecondaryMode",
                     "type": "Button",
                     "id": "56877eda-cdea-447a-939e-4e7d1d4f782e",
                     "expectedControlType": "Button",
@@ -335,7 +335,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "RaiseMode",
+                    "action": "SecondaryMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

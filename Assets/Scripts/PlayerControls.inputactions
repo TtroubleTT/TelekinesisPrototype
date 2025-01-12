@@ -78,22 +78,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TelekinesisReposition",
+                    "name": "ScrollAction",
                     "type": "Value",
                     "id": "8d24cceb-9598-48f8-ab6d-a161177af095",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "RotateObject",
-                    "type": "Button",
-                    "id": "9e965b36-616a-401e-bc1a-3c8bcfed1d4f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "RaiseMode",
@@ -333,18 +324,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "TelekinesisReposition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1cb88d03-77be-4af3-8254-5060b357ebcd",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "RotateObject",
+                    "action": "ScrollAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

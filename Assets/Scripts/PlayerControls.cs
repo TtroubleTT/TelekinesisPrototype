@@ -100,22 +100,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TelekinesisReposition"",
+                    ""name"": ""ScrollAction"",
                     ""type"": ""Value"",
                     ""id"": ""8d24cceb-9598-48f8-ab6d-a161177af095"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""RotateObject"",
-                    ""type"": ""Button"",
-                    ""id"": ""9e965b36-616a-401e-bc1a-3c8bcfed1d4f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""RaiseMode"",
@@ -355,18 +346,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""TelekinesisReposition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1cb88d03-77be-4af3-8254-5060b357ebcd"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""RotateObject"",
+                    ""action"": ""ScrollAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -940,8 +920,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
         m_Player_MainAction = m_Player.FindAction("MainAction", throwIfNotFound: true);
         m_Player_SetupAction = m_Player.FindAction("SetupAction", throwIfNotFound: true);
-        m_Player_TelekinesisReposition = m_Player.FindAction("TelekinesisReposition", throwIfNotFound: true);
-        m_Player_RotateObject = m_Player.FindAction("RotateObject", throwIfNotFound: true);
+        m_Player_ScrollAction = m_Player.FindAction("ScrollAction", throwIfNotFound: true);
         m_Player_RaiseMode = m_Player.FindAction("RaiseMode", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1024,8 +1003,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PauseMenu;
     private readonly InputAction m_Player_MainAction;
     private readonly InputAction m_Player_SetupAction;
-    private readonly InputAction m_Player_TelekinesisReposition;
-    private readonly InputAction m_Player_RotateObject;
+    private readonly InputAction m_Player_ScrollAction;
     private readonly InputAction m_Player_RaiseMode;
     public struct PlayerActions
     {
@@ -1039,8 +1017,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputAction @MainAction => m_Wrapper.m_Player_MainAction;
         public InputAction @SetupAction => m_Wrapper.m_Player_SetupAction;
-        public InputAction @TelekinesisReposition => m_Wrapper.m_Player_TelekinesisReposition;
-        public InputAction @RotateObject => m_Wrapper.m_Player_RotateObject;
+        public InputAction @ScrollAction => m_Wrapper.m_Player_ScrollAction;
         public InputAction @RaiseMode => m_Wrapper.m_Player_RaiseMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1075,12 +1052,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SetupAction.started += instance.OnSetupAction;
             @SetupAction.performed += instance.OnSetupAction;
             @SetupAction.canceled += instance.OnSetupAction;
-            @TelekinesisReposition.started += instance.OnTelekinesisReposition;
-            @TelekinesisReposition.performed += instance.OnTelekinesisReposition;
-            @TelekinesisReposition.canceled += instance.OnTelekinesisReposition;
-            @RotateObject.started += instance.OnRotateObject;
-            @RotateObject.performed += instance.OnRotateObject;
-            @RotateObject.canceled += instance.OnRotateObject;
+            @ScrollAction.started += instance.OnScrollAction;
+            @ScrollAction.performed += instance.OnScrollAction;
+            @ScrollAction.canceled += instance.OnScrollAction;
             @RaiseMode.started += instance.OnRaiseMode;
             @RaiseMode.performed += instance.OnRaiseMode;
             @RaiseMode.canceled += instance.OnRaiseMode;
@@ -1112,12 +1086,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SetupAction.started -= instance.OnSetupAction;
             @SetupAction.performed -= instance.OnSetupAction;
             @SetupAction.canceled -= instance.OnSetupAction;
-            @TelekinesisReposition.started -= instance.OnTelekinesisReposition;
-            @TelekinesisReposition.performed -= instance.OnTelekinesisReposition;
-            @TelekinesisReposition.canceled -= instance.OnTelekinesisReposition;
-            @RotateObject.started -= instance.OnRotateObject;
-            @RotateObject.performed -= instance.OnRotateObject;
-            @RotateObject.canceled -= instance.OnRotateObject;
+            @ScrollAction.started -= instance.OnScrollAction;
+            @ScrollAction.performed -= instance.OnScrollAction;
+            @ScrollAction.canceled -= instance.OnScrollAction;
             @RaiseMode.started -= instance.OnRaiseMode;
             @RaiseMode.performed -= instance.OnRaiseMode;
             @RaiseMode.canceled -= instance.OnRaiseMode;
@@ -1284,8 +1255,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnMainAction(InputAction.CallbackContext context);
         void OnSetupAction(InputAction.CallbackContext context);
-        void OnTelekinesisReposition(InputAction.CallbackContext context);
-        void OnRotateObject(InputAction.CallbackContext context);
+        void OnScrollAction(InputAction.CallbackContext context);
         void OnRaiseMode(InputAction.CallbackContext context);
     }
     public interface IUIActions

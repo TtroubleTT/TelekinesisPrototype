@@ -45,7 +45,7 @@ public class Telekinesis : MonoBehaviour
     private float lastRaiseTick;
     private bool raisingEarth = false;
     private GameObject earthObj;
-    private bool raiseEarthMode = false;
+    private bool secondaryMode = false;
 
     public void OnPush(InputAction.CallbackContext context)
     {
@@ -86,6 +86,10 @@ public class Telekinesis : MonoBehaviour
         if (context.canceled)
         {
             grabbingObject = false;
+
+            if (grabbedObject == null)
+                return;
+            
             Rigidbody rigid = grabbedObject.GetComponent<Rigidbody>();
             if (rigid == null)
                 return;
@@ -94,7 +98,7 @@ public class Telekinesis : MonoBehaviour
             return;
         }
         
-        if (raiseEarthMode)
+        if (secondaryMode)
             return;
         
         if (!context.started)
@@ -175,7 +179,7 @@ public class Telekinesis : MonoBehaviour
             return;
         }
         
-        if (!raiseEarthMode)
+        if (!secondaryMode)
             return;
         
         if (!context.started)
@@ -197,13 +201,13 @@ public class Telekinesis : MonoBehaviour
     {
         if (context.canceled)
         {
-            raiseEarthMode = false;
+            secondaryMode = false;
             return;
         }
 
         if (context.started)
         {
-            raiseEarthMode = true;
+            secondaryMode = true;
         }
     }
 

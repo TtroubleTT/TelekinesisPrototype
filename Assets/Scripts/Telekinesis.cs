@@ -171,7 +171,7 @@ public class Telekinesis : MonoBehaviour
         Vector3 direction = Vector3.up;
         if (scrollInput.y < 0)
         {
-            direction = Vector3.down;
+            direction = Vector3.right;
         }
         
         grabbedRb.AddTorque(direction * torqueForce, ForceMode.Impulse);

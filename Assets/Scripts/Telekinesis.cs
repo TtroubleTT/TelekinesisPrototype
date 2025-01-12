@@ -62,6 +62,9 @@ public class Telekinesis : MonoBehaviour
 
     public void OnPush(InputAction.CallbackContext context)
     {
+        if (secondaryMode)
+            return;
+        
         if (context.started)
         {
             increaseMultiplier = true;
@@ -233,6 +236,12 @@ public class Telekinesis : MonoBehaviour
 
     public void OnChangeRaiseObject(InputAction.CallbackContext context)
     {
+        if (!secondaryMode)
+            return;
+        
+        if (!context.started)
+            return;
+        
         earthObjectToRaise = earthObjects[(earthObjects.IndexOf(earthObjectToRaise) + 1) % earthObjects.Count];
     }
 

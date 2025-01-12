@@ -94,15 +94,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "ChangeRaiseObject",
-                    "type": "Button",
-                    "id": "d30061e3-8770-4995-96cd-d55d191be114",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -345,17 +336,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "SecondaryMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d81d2fd5-7049-4669-8705-6e28897eb29c",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "ChangeRaiseObject",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

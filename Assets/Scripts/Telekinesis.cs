@@ -267,7 +267,7 @@ public class Telekinesis : MonoBehaviour
         }
         
         Vector3 scale = raiseObjectSize;
-        raiseObjectSize = new Vector3(scale.x + changeAmount, scale.y, scale.z + changeAmount);
+        raiseObjectSize = new Vector3(Mathf.Max(scale.x + changeAmount, 0.1f), scale.y, Mathf.Max(scale.z + changeAmount, 0.1f));
     }
 
     private void Start()

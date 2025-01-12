@@ -5,13 +5,17 @@ using UnityEngine.InputSystem;
 public class MouseLook : MonoBehaviour
 {
     [Header("Sensitivity")]
-    [SerializeField] private float mouseXSensitivity;
-    [SerializeField] private float mouseYSensitivity;
+    [SerializeField]
+    private float mouseXSensitivity;
+
+    [SerializeField]
+    private float mouseYSensitivity;
 
     [Header("References")]
     [SerializeField] private Transform playerBody;
+
     private float _xRotation;
-    private Vector2 _lookInput = Vector2.zero;
+    private Vector2 _rawMouseDelta = Vector2.zero;
 
     // Code has been inspired and modified a bit based on these tutorials
     // https://www.youtube.com/watch?v=f473C43s8nE&t=505s
@@ -24,8 +28,9 @@ public class MouseLook : MonoBehaviour
     
     private void Update()
     {
-        float mouseX = _lookInput.x * mouseXSensitivity * Time.deltaTime;
-        float mouseY = _lookInput.y * mouseYSensitivity * Time.deltaTime;
+        GetRawMouseInput();
+        float mouseX = _rawMouseDelta.x * mouseXSensitivity;
+        float mouseY = _rawMouseDelta.y * mouseYSensitivity;
 
         // Looking up and down
         _xRotation -= mouseY;
@@ -37,8 +42,11 @@ public class MouseLook : MonoBehaviour
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
-    public void OnLook(InputAction.CallbackContext context)
+    private void GetRawMouseInput()
     {
-        _lookInput = context.ReadValue<Vector2>();
+        if (Mouse.current != null)
+        {
+            _rawMouseDelta = Mouse.current.delta.ReadValue();
+        }
     }
 }
